@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp-ds
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+        - key: app
+          operator: In
+          values:
+            - nodeappv1
+  template:
+    metadata:
+      labels:
+        app: nodeappv1
+    spec:
+      containers:
+      - name: apigee-node-express-v1-app-rc
+        image: ongolenavee/apigee-node-express-app:latest

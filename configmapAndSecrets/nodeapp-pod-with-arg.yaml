@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeapparg
+spec:
+  containers:
+  - image: ongolenavee/logarguments:latest
+    args: ["4","5","6"]
+    name: nodeapparg-manual
+    ports:
+    - containerPort: 80
+      protocol: TCP

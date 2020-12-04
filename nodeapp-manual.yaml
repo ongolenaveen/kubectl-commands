@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeapp-manual
+spec:
+  containers:
+  - image: ongolenavee/apigee-node-express-app:latest
+    name: apigee-node-express-app-manual
+    ports:
+    - containerPort: 8085
+      protocol: TCP

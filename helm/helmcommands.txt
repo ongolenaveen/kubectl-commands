@@ -1,0 +1,85 @@
+helm repo add $REPO_NAME $REPO_URL
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm repo list
+
+helm repo update
+
+helm repo remove bitnami
+
+helm plugin list
+
+helm plugin install
+
+helm plugin uninstall
+
+helm plugin update
+
+helm search hub
+
+helm search hub wordpress
+
+helm search hub wordpress  --max-col-width=0
+
+helm search hub wordpress --output yaml
+
+helm search repo wordpress --versions
+
+helm show chart bitnami/wordpress --version 8.1.0
+
+helm show readme bitnami/wordpress --version 8.1.0
+
+helm show values bitnami/wordpress --version 8.1.0
+
+helm show all bitnami/wordpress --version 8.1.0
+
+helm install wordpress bitnami/wordpress --values=wordpress-values.yaml --namespace chapter03 --version 8.1.0
+
+helm list --namespace chapter03
+
+helm get hooks wordpress --namespace chapter03
+
+helm get manifest wordpress --namespace chapter03
+
+helm get notes wordpress --namespace chapter03
+
+helm get values wordpress --namespace chapter03
+
+helm get all wordpress --namespace chapter03
+
+helm get values wordpress --all --namespace chapter03
+
+helm env
+
+helm upgrade wordpress bitnami/wordpress --values wordpress-values.yaml -n chapter03 --version 8.1.0
+
+kubectl get secrets -n chapter03
+
+helm history wordpress -n chapter03
+
+helm get values wordpress --revision 2 -n chapter03
+
+helm rollback wordpress 2 -n chapter03
+
+helm uninstall wordpress -n chapter03
+
+kubectl delete namespace chapter03
+
+helm dependency build $CHART_PATH
+
+helm dependency update $CHART_PATH
+
+helm dependency list $CHART_PATH
+
+helm create guestbook
+
+helm dependency update guestbook
+
+helm show values charts/redis-10.5.14.tgz
+
+helm show values guestbook
+
+helm install my-guestbook guestbook -n chapter5
+
+helm uninstall my-guestbook -n chapter5

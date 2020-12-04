@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nodeapp-daemonset
+  namespace: default
+  labels:
+    k8s-app: nodeapp-ds
+spec:
+  selector:
+    matchLabels:
+      name: nodeapp-ds
+  template:
+    metadata:
+      labels:
+        name: nodeapp-ds
+    spec:
+      containers:
+      - name: nodeapp-ds
+        image: ongolenavee/apigee-node-express-app:latest
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi

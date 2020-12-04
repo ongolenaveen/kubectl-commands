@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeapp-liveness-probe
+  labels:
+    creation_method: manual
+    env: development
+spec:
+  containers:
+  - image: ongolenavee/apigee-node-express-app:latest
+    name: apigee-node-express-app-liveness-probe
+    ports:
+    - containerPort: 8085
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: healthcheck
+        port: 8085
+      initialDelaySeconds: 15

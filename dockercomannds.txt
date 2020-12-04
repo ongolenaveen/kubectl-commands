@@ -1,0 +1,180 @@
+docker version
+
+docker-machine version
+
+docker-compose version
+
+docker --help
+
+docker search --help
+
+docker image pull nginx
+
+docker container run -d --name nginx-test -p 8080:80 nginx
+
+docker container stop nginx-test
+
+docker container rm nginx-test
+
+docker image inspect <IMAGE_ID>
+
+docker image build --file <path_to_Dockerfile> --tag <REPOSITORY>:<TAG> .
+
+docker image ls
+
+docker container run -d --name dockerfile-example -p 8080:80 local:dockerfile-example
+
+ docker image inspect -f {{.Config.Labels}} local:dockerfile-example
+
+ docker container run -it --name alpine-test alpine /bin/sh
+
+ docker container commit <container_name> <REPOSITORY>:<TAG>
+
+ docker container commit alpine-test local:broken-container
+
+ docker image save -o broken-container.tar local:broken-container
+
+ docker image push masteringdockerthirdedition/scratch-example:latest
+
+ docker container ls -a
+
+ docker container attach nginx-test
+
+ docker container attach --sig-proxy=false nginx-test // Dont Terminate Container Process
+
+ docker container exec nginx-test cat /etc/debian_version
+
+ docker container exec -i -t nginx-test /bin/bash
+
+ docker container logs --tail 5 nginx-test
+
+ docker container logs -f nginx-test
+
+ docker container logs --since 2018-08-25T18:00 nginx-test
+
+ docker container logs --since 2018-08-25T18:00 -t nginx-test
+
+ docker container top nginx-test // Get the List of Process
+
+ docker container stats nginx-test
+
+ docker container stats nginx-test --all
+
+ docker container run -d --name nginx-test --cpu-shares 512 --memory 128M -p 8080:80 nginx
+
+ docker container update --cpu-shares 512 --memory 128M nginx-test
+
+ docker container inspect nginx-test | grep -i memory
+
+ docker container update --cpu-shares 512 --memory 128M --memory-swap 256M nginx-test
+
+ docker container pause nginx1
+
+ docker container unpause nginx1
+
+ docker container prune
+
+ docker container stop nginx3 && docker container rm nginx3
+
+ docker container create --name nginx-test -p 8080:80 nginx
+
+ docker container port nginx-test
+
+ docker container diff nginx-test
+
+ docker network create moby-counter
+
+ docker container run -d --name redis --network moby-counter redis:alpine
+
+ docker container exec moby-counter cat /etc/hosts
+
+ docker container exec moby-counter cat /etc/resolv.conf
+
+ docker container exec moby-counter nslookup redis 127.0.0.11
+
+ docker network inspect moby-counter
+
+ docker network prune
+
+ docker volume ls
+
+ docker container run -d --name redis -v c2e417eab8fa20944582e2de525ab87b749099043b8c487194b7b6415b537e6a:/data --network moby-counter redis:alpine
+
+ docker volume create redis_data
+
+ docker container run -d --name redis -v redis_data:/data --network moby-counter redis:alpine
+
+ docker volume inspect redis_data
+
+ docker-compose up -d
+
+  docker-compose ps
+
+  docker-compose config // Validate compose File
+
+  docker-compose pull
+
+  docker-compose build
+
+  docker-compose create // Build but dont create containers
+
+  docker-compose start
+
+  docker-compose stop
+
+  docker-compose restart
+
+  docker-compose pause
+
+  docker-compose unpause
+
+  docker-compose top
+
+  docker-compose logs
+
+  docker-compose events
+
+  docker-compose up -d --scale worker=3
+
+  docker-compose kill
+  
+  docker-compose rm
+  
+  docker-compose down
+
+  docker-machine create --driver virtualbox docker-local
+
+  docker-machine ssh docker-local
+
+  docker-machine ip docker-local
+  
+  docker-machine inspect docker-local
+  
+  docker-machine config docker-local
+  
+  docker-machine status docker-local
+  
+  docker-machine url docker-local
+
+  docker-machine stop docker-local
+  
+  docker-machine start docker-local
+  
+  docker-machine restart docker-local
+  
+  docker-machine rm docker-local
+
+  $ docker-machine create \
+  --driver digitalocean \
+  --digitalocean-access-token $DOTOKEN \
+  --digitalocean-image ubuntu-16-04-x64 \
+  --digitalocean-region nyc3 \
+  --digitalocean-size 512mb \
+  --digitalocean-ipv6 false \
+  --digitalocean-private-networking false \
+  --digitalocean-backups false \
+  --digitalocean-ssh-user root \
+  --digitalocean-ssh-port 22 \
+  docker-digitalocean
+
+  docker-machine rm docker-digitalocean

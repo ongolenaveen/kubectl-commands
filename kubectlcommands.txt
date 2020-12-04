@@ -1,0 +1,272 @@
+kubectl config current-context
+
+kubectl config set-context docker-desktop --namespace
+
+kubectl config set-credentials
+
+kubectl config view
+
+kubectl create clusterrolebinding $USER-edit --clusterrole=edit --user=$USER
+
+kubectl run nodeapp --image=ongolenavee/apigee-node-express-app:latest --port=8085 --generator=run/v1
+
+kubectl expose rc nodeapp --type=LoadBalancer --name nodeapp-http
+
+kubectl scale rc nodeapp --replicas=3
+
+kubectl get pods
+
+kubectl get pod nodeapp-5rmdx -o yaml
+
+kubectl explain pods
+
+kubectl explain pod.spec
+
+kubectl create -f nodeapp-manual.yaml
+
+kubectl get pod nodeapp-5rmdx -o yaml
+
+kubectl get pod nodeapp-manual -o json
+
+kubectl logs nodeapp-manual -c apigee-node-express-app-manual
+
+kubectl port-forward nodeapp-manual 8888:8085
+
+kubectl get pods --show-labels
+
+kubectl get pods -L creation_method,env
+
+kubectl label po nodeapp-manual creation_method=manual // Add Label
+
+kubectl label po nodeapp-manual-lables env=debug --overwrite // Update Existing Label
+
+kubectl get pods -l creation_method=manual
+
+kubectl get pods --selector="creation_method=manual" // Display the pods with lables
+
+kubectl get nodes
+
+kubectl label node docker-desktop gpu=true
+
+kubectl get nodes -l gpu=true
+
+kubectl create -f nodeapp-gpu.yaml
+
+kubectl annotate pod nodeapp-gpu jayasri.com/someannotation="foo bar"
+
+kubectl describe pod nodeapp-gpu
+
+kubectl get ns
+
+kubectl get po --namespace kube-system
+
+kubectl create -f createnamespace.yaml
+
+kubectl get po --namespace development-namespace
+
+kubectl delete pod nodeapp-manual
+
+kubectl delete pod -l creation_method=manual
+
+kubectl delete ns development-namespace
+
+kubectl delete all --all
+
+kubectl delete service nodeapp-http
+
+kubectl delete rc nodeapp
+
+kubectl logs mypod --previous // Get Logs for terminated container
+
+kubectl create -f ./replication/nodeapp-rc.yaml
+
+kubectl get rc
+
+kubectl describe rc nodeapp-rc
+
+kubectl scale rc nodeapp-rc --replicas=4
+
+kubectl edit rc nodeapp-rc
+
+kubectl delete rc nodeapp-rc --cascade=false //Delete Replication Controller without deleting Pods
+
+kubectl get rs
+
+kubectl create -f ./replication/nodeapp-deamonset.yaml
+
+kubectl get ds
+
+kubectl delete ds nodeapp-daemonset
+
+kubectl create -f ./replication/nodeapp-batchjob.yaml
+
+kubectl get jobs
+
+kubectl get pods
+
+kubectl logs batch-job-nh66s
+
+kubectl scale job batch-job --replicas 3
+
+kubectl create -f ./replication/nodeapp-cronjob.yaml
+
+kubectl get job
+
+kubectl delete job batch-job-every-fifteen-minutes-1601446500
+
+-----------------------------------------
+Services
+-----------------------------------------
+kubectl create -f ./services/nodeapp-service.yaml
+
+kubectl get service
+
+kubectl exec nodeapp-rc-44v9w -- curl -s http://10.109.136.64/storage/radhakrishnaiah
+
+kubectl create -f ./nodeapp-service-mutipleports.yaml
+
+kubectl get svc
+
+kubectl get pods
+
+kubectl describe nodeappservice
+
+kubectl get endpoints nodeappservice
+
+kubectl exec -it nodeapp-rc-5w8dc bash
+
+kubectl create -f ./services/nodeapp-service-nodeport.yaml
+
+kubectl delete pods --all
+
+kubectl create -f ./services/nodeapp-loadbalancer.yaml
+
+kubectl get po --all-namespaces
+
+kubectl create -f ./services/nodeapp-service-ingress.yaml
+
+kubectl get ingress
+
+openssl genrsa -out nodeapp.key 2048
+
+openssl req -new -x509 -key nodeapp.key -out nodeapp.cert -days 360 -subj /CN=nodeapp.example.com
+
+kubectl create secret tls tls-secret --cert=nodeapp.cert --key=nodeapp.key
+
+kubectl create -f ./services/nodeapp-service-ingress-tls.yaml
+
+// Running DNS POD in Kube Cluster
+kubectl run dnsutils --image=tutum/dnsutils --generator=run-pod/v1 --command -- sleep infinity
+
+kubectl exec dnsutils nslookup nodeapp-headless
+
+kubectl get pv
+
+kubectl get pvc
+
+kubectl get pvc mongodb-pvc
+
+kubectl get all -l app=wordpress --namespace chapter03 // Filtering based on label name
+
+kubectl delete pod mongodb
+
+kubectl delete pvc mongodb-pvc
+
+gcloud compute disks list
+
+kubectl get sc
+
+docker image build --tag ongolenavee/logarguments:latest .
+
+docker image push ongolenavee/logarguments
+
+docker container run -it ongolenavee/logarguments
+
+docker container run -it ongolenavee/logarguments 4 5 6
+
+kubectl create -f ./create-config-map.yaml
+
+kubectl create configmap nodeapp-config --from-literal=sleep-interval=25
+
+kubectl create configmap nodeppconfigmap --from-literal=foo=bar --from-literal=bar=baz --from-literal=one=two
+
+kubectl get configmap
+
+kubectl get configmap nodeppconfigmap -o yaml
+
+kubectl create configmap my-config --from-file=config-file.conf
+
+kubectl create configmap my-config --from-file=customkey=config-file.conf
+
+kubectl create configmap my-config --from-file=/path/to/dir
+
+kubectl create configmap my-config --from-file=foo.json --from-file=bar=foobar.conf --from-file=config-opts/ --from-literal=some=thing
+
+kubectl delete configmap nodeppconfigmap
+
+kubectl get secrets
+
+kubectl get secrets default-token-s2qdk
+
+kubectl exec nodeapp-rc-cvtq8  -- ls -l /var/run/secrets/kubernetes.io/serviceaccount
+
+kubectl create -f ./create-secret.yaml
+
+kubectl apply set-last-applied -f ./create-secret.yaml
+
+kubectl get secret nodeapp-secret -o yaml
+
+kubectl create secret docker-registry mydockerhubsecret docker-username=myusername --docker-password=mypassword --docker-email=my.email@provider.com
+
+kubectl rolling-update nodeapp-rc nodeapp-rc-v2 --image=ongolenavee/apigee-node-express-app-v2:latest
+
+kubectl rolling-update nodeapp-rc nodeapp-rc-v2  --image=ongolenavee/apigee-node-express-app-v2:latest --v 6
+
+kubectl create -f ./nodeapp-deploymentset.yaml --record
+
+kubectl get deployment
+
+kubectl get deployment nodeapp-ds -o yaml
+
+kubectl rollout status deployment nodeapp-ds
+
+kubectl get deployment nodeapp-ds -o json
+
+kubectl patch deployment nodeapp-ds -p '{"spec": {"minReadySeconds": 10}}'
+
+kubectl set image deployment nodeapp-ds apigee-node-express-v1-app-rc=ongolenavee/apigee-node-express-app-v2:latest
+
+kubectl rollout undo deployment nodeapp-ds
+
+kubectl rollout undo deployment nodeapp-ds --to-revision=1
+
+kubectl rollout pause deployment nodeapp-ds
+
+kubectl rollout resume deployment nodeapp-ds
+
+kubectl describe deploy nodeapp-ds
+
+/api/v1/namespaces/<namespace>/services/<service name>/proxy/<path> // Access Service Directly from Curl
+
+kubectl run -it srvlookup --image=tutum/dnsutils --rm --restart=Never -- dig SRV nodeappservice.default.svc.cluster.local
+
+kubectl delete po nodeapp-0 --force --grace-period 0 // Force Delete
+
+
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+kubectl get componentstatuses
+
+kubectl get po -o custom-columns=POD:metadata.name,NODE:spec.nodeName --sort-by spec.nodeName -n kube-system
+
+etcdctl ls /registry
+
+etcdctl ls /registry/pods
+
+etcdctl ls /registry/pods/default
+
+kubectl get pods --watch
+
+kubectl get events
+
+kubectl get events --watch

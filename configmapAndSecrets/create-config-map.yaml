@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  sleep-interval: "25"
+metadata:
+  name: fortune-config
+  namespace: default
